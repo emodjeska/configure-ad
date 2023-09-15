@@ -24,12 +24,11 @@ This tutorial outlines the implementation of on-premises Active Directory within
 
 First, we are going to set up our resources in Azure. Create 2 virtual Machines. For the first VM, name it DC-1 and have it run Windows Server 2022. Take note that the vNet is automatically created when you create this resource. 
 
-![image](https://github.com/emodjeska/configure-ad/assets/143763072/ca3b5b45-0c75-4ca4-8886-db9192de103d)
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/c62cf9b2-740a-4c2b-bd5c-f04314148ab9)
 
 Be sure to go into DC-1's Virtual Network Interface Card (vNIC) and change DC-1's IP Address to "static". This ensures that DC-1's IP Address will not change.
 
-![image](https://github.com/emodjeska/configure-ad/assets/143763072/cc24b84e-751b-45af-b905-61a8d4cc6f0d)
-
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/bb27d432-aee2-4fed-a6bd-13f1d73dd0e7)
 
 The second Virtual Machine will be the Client. Make sure that it is running Windows 10 and be sure to use the same resource group as DC-1.
 
@@ -41,7 +40,7 @@ You will have to login to DC-1's pc and go to
 
 Start -> Windows Administative Tools -> Windows Defender Firewall with Advanced Security -> Inbound Rules -> Core Networking Diagnostics and ICMPv4 and enable these two inbound rules.
 
-![image](https://github.com/emodjeska/configure-ad/assets/143763072/4d690245-e09f-4437-93f9-74ba3d281b5f)
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/09af844b-e7bd-45d8-9891-e8c7158a8fc8)
 
 Now, You will be able to see that Client 1's pc will be able to ping DC-1, ensuring network connectivity.
 
@@ -51,7 +50,7 @@ Add Roles and Features -> Foolow the Prompts -> check "Active Domain Services." 
 
 Select "Promote this Server to a Domain Controller".
 
-![image](https://github.com/emodjeska/configure-ad/assets/143763072/230e99fb-23cb-4bea-9874-badbd31225cd)
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/36d20a6b-8741-45c3-be75-b4e5f52c7af1)
 
 Add a New Forest. 
 
@@ -73,29 +72,29 @@ Go to _Admins OU -> Right click the name of the OU -> New -> User
 
 First Name/ Last Name: Jane Doe -> User login name: jane_admin -> Select Next -> Create a password -> Uncheck all boxes -> Select Next and then select Finish.
 
-![image](https://github.com/emodjeska/configure-ad/assets/143763072/a7be8140-9f09-492b-a28b-e9502e7d6aa5)
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/8383d883-926f-431f-987d-976f9463f4ba)
 
 Go to _Admins OU -> Right click Jane Doe -> Select Properties -> Select Member of tab -> Select Add -> Type the name of your domain administrators -> Select Check Names -> OK -> Apply.
 
 Then you are ready to log out of DC-1 as "labuser" and log back in as "mydomain.com/jane_admin"
 
-![image](https://github.com/emodjeska/configure-ad/assets/143763072/2301c7d1-30da-435f-96f2-dc092bb282f7)
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/b0a59ba0-9950-4308-ac9d-11a120a021f9)
 
 We will now Join Client-1 to your domain. 
 
 Go to your Azure Virtual Machine -> Select Networking -> Select the link next to the NIC -> Select DNS Server -> Custom -> Type in DC-1's private IP address -> Click Save - Select Restart  and Select Yes. 
 
-![image](https://github.com/emodjeska/configure-ad/assets/143763072/bd64608c-ff32-4525-9596-2592c44241b8)
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/64dd593b-94a1-4a3f-997e-0da306a5140f)
 
 Log back into Client 1 using Microsoft Remote Desktop as the original local admin -> Right click the start menu -> Select System -> Rename this PC (Advanced) -> Change -> Select Domain -> Type "mydomain.com" and select OK -> Username: mydomain.com/jane_admin -> Type in password and press OK -> Restart the computer.
 
-![image](https://github.com/emodjeska/configure-ad/assets/143763072/81c85328-a965-4990-816e-09972a1cc277)
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/fc399281-1b60-406f-b98e-42f4d0ecea34)
 
 We have a User all set up, so we are going to setup Remote Desktop for Non-administative users on Client 1. 
 
 Log back into Client 1 -> Use mydomain.com/jane_admin -> Right-click the start menu and select System -> Select Remote Desktop -> Under User Accounts, click "Select Users that can remotely access this PC -> Select Add -> Type in the name of your domain users ->Select check names -> OK -> OK
 
-![image](https://github.com/emodjeska/configure-ad/assets/143763072/6d271cea-329a-4f93-b085-7d07fdafbb07)
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/37799c90-349a-4d5a-a5a4-3f46cb40db53)
 
 Now, it is time to attempt to log into Client 1 with one of the users' profiles. 
 
@@ -103,10 +102,8 @@ Login to DC-1 as Jane _admin -> Search for "Powershell_ise" -> Right click on Po
 
 https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1 
 
-![image](https://github.com/emodjeska/configure-ad/assets/143763072/33f7f37b-37db-4f41-917d-9b494ab82bac)
-
-![image](https://github.com/emodjeska/configure-ad/assets/143763072/4e008a02-82be-4bdc-a159-4637175a7d28)
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/83f56e42-2436-4efe-b884-6675e8101dab)
 
 Run the script by clicking on the green arrow button. Once users are available, go back to Active Directory Users -> mydomain.com -> _Employees, and you will see all the accounts you created. You can now login into Client 1 with one of the user accounts.
 
-Thank you for joining me today! Now we know how to run and use on campus Active Directory.
+Thank you for joining me today! Now we know how to run and use On Campus Active Directory.
