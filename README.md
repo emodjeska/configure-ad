@@ -5,9 +5,6 @@
 <h1>On-premises Active Directory Deployed in the Cloud (Azure)</h1>
 This tutorial outlines the implementation of on-premises Active Directory within Azure Virtual Machines.<br />
 
-
-<h2>Video Demonstration</h2>
-
 <h2>Environments and Technologies Used</h2>
 
 - Microsoft Azure (Virtual Machines/Compute)
@@ -22,15 +19,19 @@ This tutorial outlines the implementation of on-premises Active Directory within
 
 <h2>Deployment and Configuration Steps</h2>
 
-First, we are going to set up our resources in Azure. Create 2 virtual Machines. For the first VM, name it DC-1 and have it run Windows Server 2022. Take note that the vNet is automatically created when you create this resource. 
+In today's tutorial, we are going to implement on-premises Active Directory. Active Directory is a Mircosoft based software that allows you to centally manage thousdands of user accounts in one place. Lets get into it.
 
-![image](https://github.com/emodjeska/configure-ad/assets/143763072/c62cf9b2-740a-4c2b-bd5c-f04314148ab9)
+First, we are going to set up our resources in Azure. Create two Virtual Machines. For the first VM, name it DC-1 and have it run Windows Server 2022. Take note that the vNet is automatically created when you create this resource. 
 
-Be sure to go into DC-1's Virtual Network Interface Card (vNIC) and change DC-1's IP Address to "static". This ensures that DC-1's IP Address will not change.
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/4e4da571-09b9-4364-ac45-b0839988d5e6)
+
+Be sure to go into DC-1's Virtual Network Interface Card (vNIC) and change DC-1's IP Address to "static". This ensures that DC-1's IP Address will not change. We do this because, our other resources are going to run off of this server, so it is important that the IP address does not change. 
 
 ![image](https://github.com/emodjeska/configure-ad/assets/143763072/bb27d432-aee2-4fed-a6bd-13f1d73dd0e7)
 
 The second Virtual Machine will be the Client. Make sure that it is running Windows 10 and be sure to use the same resource group as DC-1.
+
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/0eda783b-e364-48ee-835a-5c7e617b507b)
 
 Now, we are going to ensure connectivity between the Client and Domain Controller.
 
