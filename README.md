@@ -49,7 +49,7 @@ Now, you will be able to see that Client 1's PC will be able to ping DC-1, ensur
 
 ![image](https://github.com/emodjeska/configure-ad/assets/143763072/2d3edfe6-edd3-49ce-9a7d-9150a73cf124)
 
-To install active directory, Start by opening Server Manager. 
+To install Active Directory, Start by opening Server Manager. 
 
 Add Roles and Features -> Follow the Prompts -> Check "Active Domain Services" -> Select Next -> Complete the Installation.
 
