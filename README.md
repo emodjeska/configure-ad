@@ -51,15 +51,13 @@ Now, you will be able to see that Client 1's PC will be able to ping DC-1, ensur
 
 To install active directory, Start by opening Server Manager. 
 
-Add Roles and Features -> Follow the Prompts -> Check "Active Domain Services." -> Select Add Features -> Select Next -> Complete the Installation.
+Add Roles and Features -> Follow the Prompts -> Check "Active Domain Services." -> Select Next -> Complete the Installation.
 
 ![image](https://github.com/emodjeska/configure-ad/assets/143763072/c7031112-091c-4c8f-b31e-06b49e4e714d)
 
 Select "Promote this Server to a Domain Controller".
 
-Add a "New Forest" and name it "mydomain.com". 
-
-select Next -> Create a Password -> Select Next and follow the prompts -> select install to complete the installation.
+Add a "New Forest" -> Name it "mydomain.com". -> Select Next -> Create a Password -> Select Next and follow the prompts -> Select install to complete the installation.
 
 ![image](https://github.com/emodjeska/configure-ad/assets/143763072/f42c121a-5594-4bd8-96e3-cb635ca990cb)
 
@@ -67,41 +65,45 @@ DC-1 will automatically restart. log back into DC-1.
 
 We have installed Active Directory! Now, we are going to create an Admin and Normal User Account.
 
-On DC-1, open Server Manager -> Click Tools -> select Active Directory Users and Computers.
+On DC-1, open Server Manager -> Click Tools -> select Active Directory Users and Computers -> Right-click the domain that your created -> New -> Select Orgonzational Unit (OU).
 
-Right- click the domain that your created -> New -> Select Orgonzational Unit (OU).
+Create two OUs and name the first _EMPLOYEES and the second _ADMINS.
 
-Create two OUs and name the first _Employees and the second _Admins.
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/e2dcb9d7-6c84-4ba9-935c-fb370d82f360)
+
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/ba65596e-a063-4dd3-9a03-55e70774e6b1)
 
 Refresh the page to sort the new OUs to the top.
 
-Go to _Admins OU -> Right click the name of the OU -> New -> User
+We are now going to create a new Admin account to simulate a real world senario.
 
-First Name/ Last Name: Jane Doe -> User login name: jane_admin -> Select Next -> Create a password -> Uncheck all boxes -> Select Next and then select Finish.
+Go to _Admins OU -> Right click the name of the OU -> New -> User -> First Name/ Last Name: Jane Doe -> User login name: jane_admin -> Select Next -> Create a password -> Uncheck all boxes -> Select Next-> Select Finish.
 
-![image](https://github.com/emodjeska/configure-ad/assets/143763072/8383d883-926f-431f-987d-976f9463f4ba)
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/311f28bc-9381-4d38-8907-4833d96db04d)
 
-Go to _Admins OU -> Right click Jane Doe -> Select Properties -> Select Member of tab -> Select Add -> Type the name of your domain administrators -> Select Check Names -> OK -> Apply.
 
-Then you are ready to log out of DC-1 as "labuser" and log back in as "mydomain.com/jane_admin"
+Go to _Admins OU -> Right click Jane Doe -> Select Properties -> Select Member of tab -> Select Add -> -> Select Check Names -> Type the name of your domain administrators -> Select Check Names -> OK.
 
-![image](https://github.com/emodjeska/configure-ad/assets/143763072/b0a59ba0-9950-4308-ac9d-11a120a021f9)
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/5589ba39-4eec-49c6-926d-d50c836c6c95)
+
+
+Now Jane is set to be an Admin account. We are ready to log out of DC-1 as "labuser" and log back in as "jane_admin@mydomain.com".
 
 We will now Join Client-1 to your domain. 
 
-Go to your Azure Virtual Machine -> Select Networking -> Select the link next to the NIC -> Select DNS Server -> Custom -> Type in DC-1's private IP address -> Click Save - Select Restart  and Select Yes. 
+Go to your Azure Virtual Machine -> Select Networking -> Select the link next to the NIC -> Select DNS Server -> Custom -> Type in DC-1's private IP address -> Click Save - Select Restart  and Select Yes. This will join the DNS systems of both of our VMs.
 
-![image](https://github.com/emodjeska/configure-ad/assets/143763072/64dd593b-94a1-4a3f-997e-0da306a5140f)
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/910c3661-7d1d-467f-92fd-361421e8d959)
 
 Log back into Client 1 using Microsoft Remote Desktop as the original local admin -> Right click the start menu -> Select System -> Rename this PC (Advanced) -> Change -> Select Domain -> Type "mydomain.com" and select OK -> Username: mydomain.com/jane_admin -> Type in password and press OK -> Restart the computer.
 
-![image](https://github.com/emodjeska/configure-ad/assets/143763072/fc399281-1b60-406f-b98e-42f4d0ecea34)
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/daae9b6e-f2d9-47bd-9645-68b2542eb8d7)
 
-We have a User all set up, so we are going to setup Remote Desktop for Non-administative users on Client 1. 
+We have a User all set up, so we are going to setup Remote Desktop for Non-administative users on Client 1. This will allow use to login to Client-1 with any user that we create.
 
 Log back into Client 1 -> Use mydomain.com/jane_admin -> Right-click the start menu and select System -> Select Remote Desktop -> Under User Accounts, click "Select Users that can remotely access this PC -> Select Add -> Type in the name of your domain users ->Select check names -> OK -> OK
 
-![image](https://github.com/emodjeska/configure-ad/assets/143763072/37799c90-349a-4d5a-a5a4-3f46cb40db53)
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/d36fd37b-ba4b-4f1c-90d1-f8ee1302d4a0)
 
 Now, it is time to attempt to log into Client 1 with one of the users' profiles. 
 
@@ -113,4 +115,6 @@ https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps
 
 Run the script by clicking on the green arrow button. Once users are available, go back to Active Directory Users -> mydomain.com -> _Employees, and you will see all the accounts you created. You can now login into Client 1 with one of the user accounts.
 
-Thank you for joining me today! Now we know how to run and use On Campus Active Directory.
+Now we know how to implement and use On Campus Active Directory.
+
+Thank you for joining me today.
