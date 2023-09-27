@@ -27,7 +27,7 @@ First, we are going to set up our resources in Azure. Create two Virtual Machine
 
 Be sure to go into DC-1's Virtual Network Interface Card (vNIC) and change DC-1's IP Address to "static". This ensures that DC-1's IP Address will not change. We do this because, our other resources are going to run off of this server, so it is important that the IP address does not change. 
 
-![image](https://github.com/emodjeska/configure-ad/assets/143763072/bb27d432-aee2-4fed-a6bd-13f1d73dd0e7)
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/c411b1bf-93a3-45ee-bf2f-98b15a9d4ae5)
 
 The second Virtual Machine will be the Client. Make sure that it is running Windows 10 and be sure to use the same resource group as DC-1.
 
@@ -37,25 +37,31 @@ Now, we are going to ensure connectivity between the Client and Domain Controlle
 
 Login to Client 1 using remote desktop. Search Command Prompt and open it. Then Ping DC-1's private IP Address.
 
-You will have to login to DC-1's pc and go to
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/31babb9c-0962-45b3-9a11-26ae04894bf2)
 
-Start -> Windows Administative Tools -> Windows Defender Firewall with Advanced Security -> Inbound Rules -> Core Networking Diagnostics and ICMPv4 and enable these two inbound rules.
+Then, we will have to login to DC-1's PC.
 
-![image](https://github.com/emodjeska/configure-ad/assets/143763072/09af844b-e7bd-45d8-9891-e8c7158a8fc8)
+Click start -> Windows Administative Tools -> Windows Defender Firewall with Advanced Security -> Inbound Rules -> Core Networking Diagnostics and ICMPv4 and enable these two inbound rules.
 
-Now, You will be able to see that Client 1's pc will be able to ping DC-1, ensuring network connectivity.
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/2d20006b-88cb-447e-9ad6-aae46262ceaf)
+
+Now, you will be able to see that Client 1's PC will be able to ping DC-1, ensuring network connectivity.
+
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/2d3edfe6-edd3-49ce-9a7d-9150a73cf124)
 
 To install active directory, Start by opening Server Manager. 
 
-Add Roles and Features -> Foolow the Prompts -> check "Active Domain Services." -> Select Add Features -> select Next -> Complete the installation.
+Add Roles and Features -> Follow the Prompts -> Check "Active Domain Services." -> Select Add Features -> Select Next -> Complete the Installation.
+
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/c7031112-091c-4c8f-b31e-06b49e4e714d)
 
 Select "Promote this Server to a Domain Controller".
 
-![image](https://github.com/emodjeska/configure-ad/assets/143763072/36d20a6b-8741-45c3-be75-b4e5f52c7af1)
-
-Add a New Forest. 
+Add a "New Forest" and name it "mydomain.com". 
 
 select Next -> Create a Password -> Select Next and follow the prompts -> select install to complete the installation.
+
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/f42c121a-5594-4bd8-96e3-cb635ca990cb)
 
 DC-1 will automatically restart. log back into DC-1.
 
