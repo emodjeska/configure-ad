@@ -51,13 +51,13 @@ Now, you will be able to see that Client 1's PC will be able to ping DC-1, ensur
 
 To install active directory, Start by opening Server Manager. 
 
-Add Roles and Features -> Follow the Prompts -> Check "Active Domain Services." -> Select Next -> Complete the Installation.
+Add Roles and Features -> Follow the Prompts -> Check "Active Domain Services" -> Select Next -> Complete the Installation.
 
 ![image](https://github.com/emodjeska/configure-ad/assets/143763072/c7031112-091c-4c8f-b31e-06b49e4e714d)
 
 Select "Promote this Server to a Domain Controller".
 
-Add a "New Forest" -> Name it "mydomain.com". -> Select Next -> Create a Password -> Select Next and follow the prompts -> Select install to complete the installation.
+Add a "New Forest" -> Name it "mydomain.com" -> Select Next -> Create a Password -> Select Next and follow the prompts -> Select install to complete the installation.
 
 ![image](https://github.com/emodjeska/configure-ad/assets/143763072/f42c121a-5594-4bd8-96e3-cb635ca990cb)
 
@@ -65,9 +65,9 @@ DC-1 will automatically restart. log back into DC-1.
 
 We have installed Active Directory! Now, we are going to create an Admin and Normal User Account.
 
-On DC-1, open Server Manager -> Click Tools -> select Active Directory Users and Computers -> Right-click the domain that your created -> New -> Select Orgonzational Unit (OU).
+On DC-1, open Server Manager -> Click Tools -> Select Active Directory Users and Computers -> Right-click the domain that your created -> New -> Select Orgonzational Unit (OU).
 
-Create two OUs and name the first _EMPLOYEES and the second _ADMINS.
+Create two OUs and name the first "_EMPLOYEES" and the second "_ADMINS".
 
 ![image](https://github.com/emodjeska/configure-ad/assets/143763072/e2dcb9d7-6c84-4ba9-935c-fb370d82f360)
 
@@ -82,24 +82,23 @@ Go to _Admins OU -> Right click the name of the OU -> New -> User -> First Name/
 ![image](https://github.com/emodjeska/configure-ad/assets/143763072/311f28bc-9381-4d38-8907-4833d96db04d)
 
 
-Go to _Admins OU -> Right click Jane Doe -> Select Properties -> Select Member of tab -> Select Add -> -> Select Check Names -> Type the name of your domain administrators -> Select Check Names -> OK.
+Go to _Admins OU -> Right click Jane Doe -> Select Properties -> Select Member of tab -> Select Add -> -> Select Check Names -> Type the name of your Domain Administrators -> Select Check Names -> OK.
 
 ![image](https://github.com/emodjeska/configure-ad/assets/143763072/5589ba39-4eec-49c6-926d-d50c836c6c95)
-
 
 Now Jane is set to be an Admin account. We are ready to log out of DC-1 as "labuser" and log back in as "jane_admin@mydomain.com".
 
 We will now Join Client-1 to your domain. 
 
-Go to your Azure Virtual Machine -> Select Networking -> Select the link next to the NIC -> Select DNS Server -> Custom -> Type in DC-1's private IP address -> Click Save - Select Restart  and Select Yes. This will join the DNS systems of both of our VMs.
+Go to your Azure Virtual Machine -> Select Networking -> Select the link next to the NIC -> Select DNS Server -> Custom -> Type in DC-1's private IP address -> Click save - Select Restart  and Select Yes. This will join the DNS systems of both of our VMs.
 
 ![image](https://github.com/emodjeska/configure-ad/assets/143763072/910c3661-7d1d-467f-92fd-361421e8d959)
 
-Log back into Client 1 using Microsoft Remote Desktop as the original local admin -> Right click the start menu -> Select System -> Rename this PC (Advanced) -> Change -> Select Domain -> Type "mydomain.com" and select OK -> Username: mydomain.com/jane_admin -> Type in password and press OK -> Restart the computer.
+Log back into Client 1 using Microsoft Remote Desktop as the original local admin -> Right click the start menu -> Select System -> Rename this PC (Advanced) -> Change -> Select Domain -> Type "mydomain.com" -> Select OK -> Username: mydomain.com/jane_admin -> Type in password and press OK -> Restart the computer.
 
 ![image](https://github.com/emodjeska/configure-ad/assets/143763072/daae9b6e-f2d9-47bd-9645-68b2542eb8d7)
 
-We have a User all set up, so we are going to setup Remote Desktop for Non-administative users on Client 1. This will allow use to login to Client-1 with any user that we create.
+We have a User set up, so we are going to setup Remote Desktop for Non-administative users on Client 1. This will allow use to login to Client-1 with any user that we create.
 
 Log back into Client 1 -> Use mydomain.com/jane_admin -> Right-click the start menu and select System -> Select Remote Desktop -> Under User Accounts, click "Select Users that can remotely access this PC -> Select Add -> Type in the name of your domain users ->Select check names -> OK -> OK
 
@@ -111,9 +110,15 @@ Login to DC-1 as Jane _admin -> Search for "Powershell_ise" -> Right click on Po
 
 https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1 
 
-![image](https://github.com/emodjeska/configure-ad/assets/143763072/83f56e42-2436-4efe-b884-6675e8101dab)
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/8b7c3e7c-a2cb-4a6c-8578-7cb13faf7329)
 
 Run the script by clicking on the green arrow button. Once users are available, go back to Active Directory Users -> mydomain.com -> _Employees, and you will see all the accounts you created. You can now login into Client 1 with one of the user accounts.
+
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/53c9e0cf-21a7-4dbe-b75e-886090cd2e4d)
+
+![image](https://github.com/emodjeska/configure-ad/assets/143763072/60112c4b-b673-47d8-b461-c3c741237c69)
+
+From here you are able to unlock passwords by going to "Active Directory Users and Computers" -> Click on  _EMPLOYEES -> Click on the user account -> Check the box that says "Unlock Account". 
 
 Now we know how to implement and use On Campus Active Directory.
 
